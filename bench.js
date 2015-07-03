@@ -30,7 +30,7 @@ var bench = function (arg_count, arg_url, arg_method, arg_param, arg_resultAsser
         if (arg_needCookie) agent.attachCookies(req);
         req.send(arg_param)
             .end(function (err, res) {
-                if (err) callback(err);
+                //if (err) return callback(null,err);
                 if (res && arg_resultAssert && res.text && validator.isJSON(res.text)) {
                     var result = JSON.parse(res.text);
                     for (var i in arg_resultAssert) {
@@ -38,7 +38,7 @@ var bench = function (arg_count, arg_url, arg_method, arg_param, arg_resultAsser
                             pass++;
                         }
                     }
-                }else if(!arg_resultAssert){
+                } else if (!arg_resultAssert) {
                     pass++;
                 }
                 var diff = process.hrtime(time);
@@ -83,5 +83,5 @@ var bench = function (arg_count, arg_url, arg_method, arg_param, arg_resultAsser
 
 };
 
-var url = "http://gd.qq.com/news/";
-bench(1000, url, "get", null);
+module.exports = bench;
+
